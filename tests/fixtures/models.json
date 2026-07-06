@@ -1,0 +1,25 @@
+{
+  "models": [
+    {
+      "external_id": "mdl_001",
+      "name": "Custom Cup",
+      "collection_external_id": "coll_001",
+      "thumbnail_url": "https://example.com/thumb1.png",
+      "mesh_file_path": "/models/cup.stl"
+    },
+    {
+      "external_id": "mdl_002",
+      "name": "Phone Stand",
+      "collection_external_id": "coll_001",
+      "thumbnail_url": "https://example.com/thumb2.png",
+      "mesh_file_path": "/models/stand.stl"
+    },
+    {
+      "external_id": "mdl_003",
+      "name": "Keychain",
+      "collection_external_id": "coll_002",
+      "thumbnail_url": "https://example.com/thumb3.png",
+      "mesh_file_path": "/models/keychain.stl"
+    }
+  ]
+}

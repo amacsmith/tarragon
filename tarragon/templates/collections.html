@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collections - Tarragon</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: system-ui, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+        h1 { margin: 0 0 20px; color: #333; }
+        .collections-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .collection-card {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .collection-card h2 { margin: 0 0 8px; font-size: 1.1em; color: #2563eb; }
+        .collection-card p { margin: 4px 0; color: #666; font-size: 0.9em; }
+        .models-list { margin-top: 12px; padding-left: 16px; }
+        .model-item {
+            display: flex;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .model-item:last-child { border-bottom: none; }
+        .model-thumb {
+            width: 40px;
+            height: 40px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            flex-shrink: 0;
+            color: #9ca3af;
+        }
+        .model-name { flex: 1; font-size: 0.9em; color: #374151; }
+        .model-count {
+            font-size: 0.85em;
+            color: #9ca3af;
+            background: #f3f4f6;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .no-data {
+            color: #9ca3af;
+            text-align: center;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Collections</h1>
+    
+    {% if collections %}
+    <div class="collections-grid">
+        {% for collection in collections %}
+        <div class="collection-card">
+            <h2>{{ collection.name }}</h2>
+            <p>External ID: {{ collection.external_id }}</p>
+            <p class="model-count">{{ collection.model_count }} model{{ 's' if collection.model_count != 1 else '' }}</p>
+            
+            {% if collection.models %}
+            <div class="models-list">
+                {% for model in collection.models %}
+                <a href="/models/{{ model.id }}" style="text-decoration: none; color: inherit;">
+                    <div class="model-item">
+                        <div class="model-thumb">
+                            {% if model.thumbnail_url %}
+                            <img src="{{ model.thumbnail_url }}" alt="" loading="lazy"
+                                 style="width:40px;height:40px;object-fit:cover;border-radius:4px;">
+                            {% else %}
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                            {% endif %}
+                        </div>
+                        <div class="model-name">{{ model.name }}</div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-data">
+        <p>No collections found. <a href="/">Sync with MakerWorld</a> or seed fixture data.</p>
+    </div>
+    {% endif %}
+</body>
+</html>

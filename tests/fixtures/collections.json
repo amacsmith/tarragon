@@ -1,0 +1,14 @@
+{
+  "collections": [
+    {
+      "id": "1",
+      "external_id": "coll_001",
+      "name": "My Favorite Designs"
+    },
+    {
+      "id": "2",
+      "external_id": "coll_002",
+      "name": "Recent Favorites"
+    }
+  ]
+}

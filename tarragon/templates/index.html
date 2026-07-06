@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarragon</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10/dist/htmx.min.js" integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC" crossorigin="anonymous"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: system-ui, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+        h1 { margin: 0 0 4px; color: #333; }
+        .tagline { color: #666; margin: 0 0 24px; }
+        .stats { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 16px 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-width: 140px;
+        }
+        .stat-card .num { font-size: 2em; font-weight: 700; color: #2563eb; }
+        .stat-card .label { color: #666; font-size: 0.9em; }
+        nav { display: flex; gap: 12px; margin-bottom: 24px; }
+        nav a {
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 0.95em;
+        }
+        nav a.secondary { background: white; color: #2563eb; border: 1px solid #2563eb; }
+        .token-note { color: #666; font-size: 0.9em; }
+        .token-note a { color: #2563eb; }
+        button {
+            background: #16a34a; color: white; border: none;
+            padding: 10px 18px; border-radius: 6px; font-size: 0.95em; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tarragon</h1>
+    <p class="tagline">MakerWorld collections &rarr; parametric OpenSCAD models</p>
+
+    <nav>
+        <a href="/collections">Browse collections</a>
+        <a href="/settings" class="secondary">Settings</a>
+    </nav>
+
+    <div class="stats">
+        <div class="stat-card"><div class="num">{{ n_collections }}</div><div class="label">Collections</div></div>
+        <div class="stat-card"><div class="num">{{ n_models }}</div><div class="label">Models</div></div>
+        <div class="stat-card"><div class="num">{{ n_scad_jobs }}</div><div class="label">SCAD jobs</div></div>
+    </div>
+
+    {% if has_token %}
+    <p class="token-note">MakerWorld token configured.</p>
+    <form hx-post="/sync" hx-swap="outerHTML">
+        <button type="submit">Sync with MakerWorld</button>
+    </form>
+    {% else %}
+    <p class="token-note">Token not configured. <a href="/settings">Add your MakerWorld token</a> to enable sync.</p>
+    {% endif %}
+</body>
+</html>
